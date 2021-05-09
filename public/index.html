@@ -61,7 +61,6 @@
           .post("/genTotp")
           .then(function (response) {
             // handle success
-            console.log(response);
             qrcode.innerHTML = "";
             qrcode.insertAdjacentHTML(
               `afterbegin`,
@@ -74,9 +73,26 @@
           .catch(function (error) {
             // handle error
             console.log(error);
+          });
+      };
+
+      const verifyTotp = () => {
+        let userId = document.getElementById("userId").value;
+        let totpcode = document.getElementById("totpcode").value;
+
+        if (!userId || !totpcode) {
+          return;
+        }
+
+        axios
+          .post(`/verify/${userId}/totpcode/${totpcode}`)
+          .then((response) => {
+            // handle success
+            document.getElementById("verified").innerText = response.data;
           })
-          .then(function () {
-            // always executed
+          .catch((error) => {
+            // handle error
+            console.log(error);
           });
       };
     </script>
