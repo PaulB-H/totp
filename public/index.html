@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
     <title>TOTP w/QR</title>
   </head>
   <body>
@@ -50,51 +51,56 @@
         <h4 id="verified"></h4>
       </div>
     </main>
-    <!-- Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Local Script -->
-    <script>
-      const qrcode = document.getElementById("qrcode");
 
-      const genTotp = () => {
-        axios
-          .post("/genTotp")
-          .then(function (response) {
-            // handle success
-            qrcode.innerHTML = "";
-            qrcode.insertAdjacentHTML(
-              `afterbegin`,
-              `
+    <!-- scriptbox -->
+    <scriptbox style="display: none !important; z-index: -1" area-hidden="true">
+      <!-- Axios -->
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <!-- Local Script -->
+      <script>
+        const qrcode = document.getElementById("qrcode");
+
+        const genTotp = () => {
+          axios
+            .post("/genTotp")
+            .then(function (response) {
+              // handle success
+              qrcode.innerHTML = "";
+              qrcode.insertAdjacentHTML(
+                `afterbegin`,
+                `
                   <img src="${response.data.qrcode_url}">
                   <p>Code generated for user <strong style="font-size: 125%">${response.data.user}</strong></p>
                 `
-            );
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          });
-      };
+              );
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            });
+        };
 
-      const verifyTotp = () => {
-        let userId = document.getElementById("userId").value;
-        let totpcode = document.getElementById("totpcode").value;
+        const verifyTotp = () => {
+          let userId = document.getElementById("userId").value;
+          let totpcode = document.getElementById("totpcode").value;
 
-        if (!userId || !totpcode) {
-          return;
-        }
+          if (!userId || !totpcode) {
+            return;
+          }
 
-        axios
-          .post(`/verify/${userId}/totpcode/${totpcode}`)
-          .then((response) => {
-            // handle success
-            document.getElementById("verified").innerText = response.data;
-          })
-          .catch((error) => {
-            // handle error
-            console.log(error);
-          });
-      };
-    </script>
+          axios
+            .post(`/verify/${userId}/totpcode/${totpcode}`)
+            .then((response) => {
+              // handle success
+              document.getElementById("verified").innerText = response.data;
+            })
+            .catch((error) => {
+              // handle error
+              console.log(error);
+            });
+        };
+      </script>
+    </scriptbox>
+    <!-- END scriptbox -->
   </body>
 </html>
