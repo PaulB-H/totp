@@ -6,5 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TOTP w/QR</title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Hello TOTP</h1>
+      <div id="qrcode"></div>
+    </header>
+
+    <main>
+      <button onclick="genTotp()">Gen TOTP</button>
+      <br />
+
+      <hr />
+
+      <h3>Verify TOTP</h3>
+
+      <label for="userId">User ID</label><br />
+      <input
+        type="number"
+        name="userId"
+        id="userId"
+        placeholder="Enter user ID here"
+      />
+      <br /><br />
+
+      <label for="totpcode">
+        TOTP Code (6 digit code from authenticator app)
+      </label>
+      <br />
+      <input
+        type="number"
+        name="totpcode"
+        id="totpcode"
+        placeholder="Enter 6-digit code"
+      />
+
+      <br /><br />
+
+      <button onclick="verifyTotp()">Verify Totp</button>
+      <br /><br />
+
+      <h3>Verified?</h3>
+      <h4 id="verified"></h4>
+    </main>
+  </body>
 </html>
