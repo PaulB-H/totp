@@ -23,4 +23,26 @@ app.post("/genTotp", (req, res) => {
   });
 });
 
+app.post("/verify/:userId/totpcode/:totpcode", function (req, res) {
+  let serverSecret;
+  let { userId, totpcode } = req.params;
+
+  users.forEach((item, index) => {
+    userId = Number.parseInt(userId);
+    totpcode = Number.parseInt(totpcode);
+
+    if (userId === item.user) {
+      serverSecret = users[index].secret;
+    }
+  });
+
+  let verified = speakeasy.totp.verify({
+    secret: serverSecret,
+    encoding: "base32",
+    token: totpcode,
+  });
+
+  res.json(verified);
+});
+
 app.listen(5000, () => console.log(`Server started on port ${5000}`));
