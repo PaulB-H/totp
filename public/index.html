@@ -10,46 +10,50 @@
   <body>
     <header>
       <h1>Hello TOTP</h1>
-      <div id="qrcode"></div>
     </header>
 
     <main>
-      <button onclick="genTotp()">Gen TOTP</button>
-      <br />
+      <div id="gen-qrcode">
+        <div id="qrcode" style="min-width: 230px; min-height: 230px"></div>
+        <button onclick="genTotp()">Gen TOTP</button>
+      </div>
 
+      <br />
       <hr />
 
       <h3>Verify TOTP</h3>
+      <form id="verify-totp-form" action="#" onsubmit="verifyTotp()">
+        <label for="userId">User ID</label><br />
+        <input
+          type="number"
+          name="userId"
+          id="userId"
+          placeholder="Enter user ID here"
+        />
 
-      <label for="userId">User ID</label><br />
-      <input
-        type="number"
-        name="userId"
-        id="userId"
-        placeholder="Enter user ID here"
-      />
-      <br /><br />
+        <br />
+        <br />
 
-      <label for="totpcode">
-        TOTP Code (6 digit code from authenticator app)
-      </label>
-      <br />
-      <input
-        type="number"
-        name="totpcode"
-        id="totpcode"
-        placeholder="Enter 6-digit code"
-      />
+        <label for="totpcode">
+          TOTP Code (6 digit code from authenticator app)
+        </label>
+        <br />
+        <input
+          type="number"
+          name="totpcode"
+          id="totpcode"
+          placeholder="Enter 6-digit code"
+        />
 
-      <br /><br />
+        <br /><br />
 
-      <button onclick="verifyTotp()">Verify Totp</button>
-      <br /><br />
+        <input type="submit" value="Verify TOTP" />
 
-      <div id="verified">
-        <h3>Verified?</h3>
-        <h4 id="verified"></h4>
-      </div>
+        <br /><br />
+      </form>
+
+      <h3>Verified?</h3>
+      <h4 id="verified"></h4>
     </main>
 
     <!-- scriptbox -->
@@ -81,6 +85,8 @@
         };
 
         const verifyTotp = () => {
+          event.preventDefault();
+
           let userId = document.getElementById("userId").value;
           let totpcode = document.getElementById("totpcode").value;
 
