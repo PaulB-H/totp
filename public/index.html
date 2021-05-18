@@ -99,7 +99,6 @@
             .then(function (response) {
               // handle success
               userCountSpan.innerText = "";
-              console.log(response.data);
               userCountSpan.innerText = response.data;
             })
             .catch(function (error) {
