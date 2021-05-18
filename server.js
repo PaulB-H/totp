@@ -12,6 +12,11 @@ app.get("/", (req, res) =>
 
 const users = [];
 
+app.get("/userCount", (req, res) => {
+  const userCount = users.length;
+  res.json(userCount);
+});
+
 app.post("/genTotp", (req, res) => {
   const secret = speakeasy.generateSecret();
 
