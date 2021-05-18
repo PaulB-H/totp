@@ -4,6 +4,8 @@ const app = express();
 const speakeasy = require("speakeasy");
 const QRCode = require("qrcode");
 
+const serverStarted = new Date();
+
 app.use(express.static("public"));
 
 app.get("/", (req, res) =>
@@ -11,6 +13,10 @@ app.get("/", (req, res) =>
 );
 
 const users = [];
+
+app.get("/serverStarted", (req, res) => {
+  res.json(serverStarted);
+});
 
 app.get("/userCount", (req, res) => {
   const userCount = users.length;
