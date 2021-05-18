@@ -72,6 +72,23 @@
       <!-- Local Script -->
       <script>
         const qrcode = document.getElementById("qrcode");
+        const userCountSpan = document.getElementById("user-count");
+
+        const getUserCount = () => {
+          axios
+            .get("/userCount")
+            .then(function (response) {
+              // handle success
+              userCountSpan.innerText = "";
+              console.log(response.data);
+              userCountSpan.innerText = response.data;
+            })
+            .catch(function (error) {
+              // handle error
+              console.log(error);
+            });
+        };
+        getUserCount();
 
         const genTotp = () => {
           axios
@@ -86,6 +103,7 @@
                   <p>Code generated for user <strong style="font-size: 125%">${response.data.user}</strong></p>
                 `
               );
+              getUserCount();
             })
             .catch(function (error) {
               // handle error
