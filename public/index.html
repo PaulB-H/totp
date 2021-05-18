@@ -78,6 +78,20 @@
       <script>
         const qrcode = document.getElementById("qrcode");
         const userCountSpan = document.getElementById("user-count");
+        const serverStartedSpan = document.getElementById("server-started");
+
+        const getServerStartDate = () => {
+          axios
+            .get("/serverStarted")
+            .then((res) => {
+              let serverStarted = new Date(res.data);
+              serverStartedSpan.innerText = serverStarted.toLocaleDateString();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        };
+        getServerStartDate();
 
         const getUserCount = () => {
           axios
